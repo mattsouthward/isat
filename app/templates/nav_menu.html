@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/simple-sidebar.css') }}">
+{% endblock styles %}
+{% block body %}
+    {% block nav-menu %}
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                        ATMC ISAT
+                </li>
+                <li>
+                    <a href="#">Search</a>
+                </li>
+                <li>
+                    <a href="#">Add User</a>
+                </li>
+                <li>
+                    <a href="#">Archived Users</a>
+                </li>
+                <li>
+                    <a href="#">Who's Online</a>
+                </li>
+                <li>
+                    <a href="#">Log Search</a>
+                </li>
+                <li>
+                    <a href="#">NAS Statistics</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+                </div>
+    {{ super() }}
+{% endblock body %}

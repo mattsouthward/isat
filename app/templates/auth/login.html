@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}ATMC ISAT Login{% endblock title %}
+{% block body %}
+
+<div class="container">
+    <h2 class="form-signin-heading" align="center">ATMC ISAT Login</h2>
+    <form class="form-signin" action="/login" method="POST">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="form-group">
+               <span class="wy-help-inline" style="color: red">{{ messages[0] }}</span>
+            </div>
+        {% endif %}
+    {% endwith %}
+        {{ form.csrf_token }}
+        <div class="from-group">
+            <label for="loginusername" class="sr-only">Username</label>
+            {{ form.loginusername(class="form-control", placeholder="username") }}
+            {% if form.loginusername.errors %}
+            <span class="wy-help-inline" style="color:red">{{ form.loginusername.errors[0] }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="loginpassword" class="sr-only">Password</label>
+            {{ form.loginpassword(class="form-control", placeholder="password") }}
+            {% if form.loginpassword.errors %}
+            <span class="wy-help-inline" style="color:red">{{ form.loginpassword.errors[0] }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group text-center">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{{ super() }}
+{% endblock body %}
+

@@ -12,8 +12,8 @@ def index():
     else:
         form = LoginForm()
         if form.validate_on_submit():
-            user = RadiusUser.query.filter_by(userId=form.loginusername.data).first()
-            if user is not None and user.verify_password(form.loginpassword.data) and user.satLvl != 'none':
+            user = RadiusUser.query.filter_by(username=form.loginusername.data).first()
+            if user is not None and user.get_password(form.loginpassword.data) and user.satLvl != 'none':
                 login_user(user)
                 return redirect(url_for('main.search'))
             flash('Invalid username or password.')

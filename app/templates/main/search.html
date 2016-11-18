@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+    <div class="row">
+        <div class="page-header content-heading content-area">
+            <h3>User Search   <small>at least one field is required</small></h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-9 col-sm-6 col-md-5 content-area">
+                <form class="form-group" action="/search" method="POST">
+                    {{ form.csrf_token }}
+                    <div class="from-group">
+                        <label for="username">Username</label>
+                        {{ form.username(class="form-control") }}
+                        <label for="account_number">Account Number</label>
+                        {{ form.account_number(class="form-control") }}
+                        <label for="phone_number">Phone Number</label>
+                        {{ form.phone_number(class="form-control") }}
+                        <label for="last_name">Last Name</label>
+                        {{ form.last_name(class="form-control") }}
+                        {{ form.submit(class="btn btn-primary") }}
+{#                        {% for name, field in form._fields.items() %}#}
+{#                            <label for="{{ i }}" class="sr-only">{{ i|capitalize }}</label>#}
+{#                            {{ form.i(class="form-control", placeholder="{{ i }}") }}#}
+{#                            {% if name != 'csrf_token' and name != 'submit' %}#}
+{#                                <label for="{{ name }}">{{ name|replace("_", " ")|capitalize }}</label>#}
+{#                                {{ form.username(class="form-control") }}#}
+{#                            {% endif %}#}
+{#                        {% endfor %}#}
+{#                        {{ form.submit(class="btn btn-primary") }}#}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

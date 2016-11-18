@@ -7,12 +7,12 @@
             <form class="form-signin" action="/" method="POST">
                 <h2 class="form-signin-heading" align="left">ATMC ISAT Login</h2>
                 {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="form-group alert alert-danger">
-                       <span>{{ messages[0] }}</span>
-                    </div>
-                {% endif %}
-            {% endwith %}
+                    {% if messages %}
+                        <div class="form-group alert alert-danger">
+                           <span>{{ messages[0] }}</span>
+                        </div>
+                    {% endif %}
+                {% endwith %}
                 {{ form.csrf_token }}
                 <div class="from-group">
                     <label for="loginusername" class="sr-only">Username</label>

@@ -1,25 +1,52 @@
 from datetime import datetime
-from flask import redirect, render_template, request, session, url_for
-from . import main
+from flask import flash, redirect, render_template, request, session, url_for
 from flask_login import login_required
-from .forms import SearchForm
+from . import main
+from .forms import SearchForm, AddUserForm
+from .. import db
+from ..models import RadiusUser
+
+
+from ..models import RadiusUser
 
 
 @main.route('/search', methods=['GET', 'POST'])
 @login_required
 def search():
     form = SearchForm()
-    if form.validate():
-        pass
+    search_terms = []
+    if form.validate_not_blank():
+        for i in form:
+            if i is not None:
+                search_terms.append(i)
     else:
-        return render_template('main/index.html', form=form)
+        return render_template('main/search.html', form=form)
 
 
 
 @main.route('/add_user', methods=['GET', 'POST'])
 @login_required
 def add_user():
-    return render_template('main/index.html')
+    form = AddUserForm()
+    if form.validate_on_submit():
+        user = RadiusUser(username=form.username.data,
+                          password=form.password.data,
+                          first_name=form.first_name.data,
+                          last_name=form.last_name.data,
+                          account_number=form.account_number.data,
+                          company_name=form.company_name.data,
+                          phone_number=form.phone_number.data,
+                          secret_question=form.secret_question.data,
+                          secret_answer=form.secret_answer.data,
+                          email_account=form.email_account.data,
+                          internet_service=form.internet_service.data,
+                          notes=form.notes.data
+                          )
+        db.session.add(user)
+        db.session.commit()
+        flash("User added")
+        redirect(url_for('main.search'))
+    return render_template('main/add_user.html', form=form)
 
 
 @main.route('/archived_user', methods=['GET', 'POST'])

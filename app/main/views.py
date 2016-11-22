@@ -6,7 +6,7 @@ from .forms import SearchForm, AddUserForm
 from .. import db
 from ..models import RadiusUser
 
-
+from flask import session
 from ..models import RadiusUser
 
 
@@ -14,13 +14,14 @@ from ..models import RadiusUser
 @login_required
 def search():
     form = SearchForm()
-    search_terms = []
-    if form.validate_not_blank():
-        for i in form:
-            if i is not None:
-                search_terms.append(i)
-    else:
-        return render_template('main/search.html', form=form)
+    search_terms = {}
+    if form.validate_on_submit():
+        for field_name, field_value in form.data.items():
+            if field_value and field_name != 'submit':
+                search_terms[field_name] = field_value
+        if not search_terms:
+            flash("At lease one field is required", "error")
+    return render_template('main/search.html', form=form)
 
 
 
@@ -44,8 +45,8 @@ def add_user():
                           )
         db.session.add(user)
         db.session.commit()
-        flash("User added")
-        redirect(url_for('main.search'))
+        flash("User added", "info")
+        return redirect(url_for('main.search'))
     return render_template('main/add_user.html', form=form)
 
 

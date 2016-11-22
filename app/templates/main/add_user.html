@@ -19,49 +19,29 @@
                 <form class="form-group" action="/add_user" method="POST">
                     {{ form.csrf_token }}
                     <div class="from-group">
-                        <label for="username"><em>Username *</em></label>
-                        {{ form.username(class="form-control") }}
-                        {% if form.username.errors %}
-                            <div class="alert alert-danger">
-                                <span>{{ form.username.errors[0] }}</span>
-                            </div>
-                        {% endif %}
-                        <label for="password"><em>Password *</em></label>
-                        {{ form.password(class="form-control") }}
-                        {% if form.password.errors %}
-                            <div class="alert alert-danger">
-                                <span>{{ form.password.errors[0] }}</span>
-                            </div>
-                        {% endif %}
-                        <label for="first_name"><em>First name *</em></label>
-                        {{ form.first_name(class="form-control") }}
-                        <label for="last_name"><em>Last name *</em></label>
-                        {{ form.last_name(class="form-control") }}
-                        <label for="company_name">Company name</label>
-                        {{ form.company_name(class="form-control") }}
-                        <label for="account_number"><em>Account Number *</em></label>
-                        {{ form.account_number(class="form-control") }}
-                        <label for="phone_number"><em>Phone Number *</em></label>
-                        {{ form.phone_number(class="form-control") }}
-                        <label for="secret_question">Secret question</label>
-                        {{ form.secret_question(class="form-control") }}
-                        <label for="secret_answer">Secret answer</label>
-                        {{ form.secret_answer(class="form-control") }}
+                        {% for key, value in form._fields.items() %}
+                            {% if key != "submit" and key != "csrf_token" and key != "email_account" and key != "internet_service" and key != "notes" %}
+                                {% if value.errors %}
+                                    <div class="form-group has-error">
+                                        <label class="control-label" for="inputError">{{ key|capitalize|replace("_", " ") }}</label>
+                                        {{ value(class="form-control", id="inputError") }}
+                                        <span class="help-block">{{ key|capitalize|replace("_", " ") }} is required</span>
+                                    </div>
+                                {% else %}
+                                    <label for="{{ key }}">{{ key|capitalize|replace("_", " ") }}</label>
+                                    {{ value(class="form-control") }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
                         <div class="checkbox">
                             <label>{{ form.internet_service() }}<strong>Internet service</strong></label>
                         </div>
                         <div class="checkbox">
                             <label>{{ form.email_account() }}<strong>Email account</strong></label>
                         </div>
-
                         <label for="notes">Notes</label>
                         {{ form.notes(class="form-control") }}
                         {{ form.submit(class="btn btn-primary") }}
-                        {% if form.errors %}
-                            {% for error in form.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        {% endif %}
                     </div>
                 </form>
             </div>

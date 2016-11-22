@@ -2,27 +2,16 @@ from flask_wtf import FlaskForm
 from ..models import RadiusUser
 from wtforms import PasswordField, SubmitField, validators, StringField, IntegerField, ValidationError, BooleanField, \
     TextAreaField, DateTimeField
-from wtforms.validators import DataRequired, Length, Regexp, IPAddress
+from wtforms.validators import DataRequired, Length, Regexp, IPAddress, Optional
 import re
 
 
 class SearchForm(FlaskForm):
     username = StringField('username')
-    account_number = IntegerField('account_number')
+    account_number = IntegerField('account_number', validators=[Optional()])
     phone_number = StringField('phone_number')
     last_name = StringField('last_name')
     submit = SubmitField('search')
-
-    def validate_not_blank(self):
-        input_list = [self.username.data, self.account_number.data, self.phone_number.data, self.last_name.data]
-        if not super(SearchForm, self).validate():
-            return False
-        for i in input_list:
-            if i is not None:
-                return True
-        msg = "At least one field is required."
-        self.username.errors.append(msg)
-        return False
 
 
 class AddUserForm(FlaskForm):

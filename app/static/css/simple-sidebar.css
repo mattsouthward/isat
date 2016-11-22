@@ -33,7 +33,14 @@ body {
 }
 
 .content-area textarea {
+  margin-bottom: 25px;
+}
+
+.help-block-error {
+  display: block;
+  margin-top: 2px;
   margin-bottom: 15px;
+  color: #d43f3a;
 }
 
 #sidebar {
